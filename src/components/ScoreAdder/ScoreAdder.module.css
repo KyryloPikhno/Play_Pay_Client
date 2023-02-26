@@ -1,0 +1,71 @@
+.popup{
+  /*border: 2px solid orange;*/
+  background: white;
+  z-index: 2000;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  width: 80%;
+  max-width: 600px;
+  /*padding: 22px;*/
+  border-radius: 12px;
+  box-shadow: 10px 10px 10000px black;
+}
+
+.popup h3{
+  /*display: flex;*/
+  /*justify-content: center;*/
+  /*color: var(--light);*/
+  /*margin-bottom: 5px;*/
+}
+
+.closePopup {
+  /*position: absolute;*/
+  /*top: 11px;*/
+  /*right: 11px;*/
+  /*width: 24px;*/
+  /*height: 24px;*/
+  /*color: var(--light);*/
+  /*cursor: pointer;*/
+  /*display: flex;*/
+  /*align-items: center;*/
+  /*justify-content: center;*/
+  /*background-color: var(--primary);*/
+  /*border-radius: 100px;*/
+}
+
+.popup form {
+  /*display: flex;*/
+  /*align-items: center;*/
+  /*justify-content: center;*/
+  /*flex-direction: column;*/
+  /*gap: 5px;*/
+}
+
+.popup  input{
+  /*height: 35px;*/
+  /*width: 100%;*/
+  /*background-color: var(--dark);*/
+  /*display: flex;*/
+  /*justify-content: center;*/
+  /*border-radius: 12px;*/
+  /*border: 1px solid orange;*/
+  /*color: var(--light);*/
+}
+
+::placeholder {
+  /*color: white;*/
+}
+
+.popup button{
+  /*border: 1px solid black;*/
+  /*border-radius: 8px;*/
+  /*padding: 5px;*/
+  /*color: var(--light);*/
+  /*background-image: linear-gradient(to bottom,var(--primary),var(--secondary)) ;*/
+}
+
+.popup button:hover{
+  /*background: orange;*/
+}
