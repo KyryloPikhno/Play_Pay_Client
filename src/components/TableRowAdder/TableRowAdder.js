@@ -1,70 +1,117 @@
+import {useDispatch, useSelector} from "react-redux";
+import {joiResolver} from "@hookform/resolvers/joi";
 import {useForm} from "react-hook-form";
 import {
-  Card,
-  Form,
+  Button,
+  Card, CardBody, CardHeader,
   ListGroup,
   ListGroupItem,
 } from "shards-react";
-import React from "react";
-import InputGroups from "../ComponentsOverview/InputGroups";
-import SeamlessInputGroups from "../ComponentsOverview/SeamlessInputGroups";
 
+import {tableActions} from "../../redux/slices/table.slice";
+import {newTableRowValidator} from "../../validators";
 import css from './TableRowAdder.module.css';
 
 const TableRowAdder = ({setActive}) => {
+  const {
+    handleSubmit,
+    register,
+    reset,
+    formState: {errors, isValid}
+  } = useForm({
+    defaultValues: {
+      "companyName": null,
+      "gameName": null,
+      "currency": null,
+      "totalPrice": null,
+      "confirm": null
+    },
+    resolver: joiResolver(newTableRowValidator),
+    mode: 'all'
+  });
 
-  const {handleSubmit, register, reset} = useForm()
+  const {table} = useSelector(state => state.tableReducer);
 
-  const submit = async ({text}) => {
+  const dispatch = useDispatch();
+
+  const submit = async (tableRow) => {
     try {
-      console.log(text);
-    } catch (e) {
-      console.error('Error', e)
-    }
-    reset()
+      tableRow.status = false;
 
-    setActive(false)
+      dispatch(tableActions.create({tableRow}));
+    } catch (e) {
+      console.error('Error', e);
+    }
+    reset();
+
+    setActive(false);
   };
 
   return (
     <div className={css.popup}>
-      <Card small>
-        {/*<div className="d-flex justify-content-end">*/}
-        {/*  <Button theme="secondary"*/}
-        {/*          onClick={() => setActive(false)}>Close</Button>*/}
-        {/*</div>*/}
-        {/*<button onClick={() => setActive(false)} className="close" data-dismiss="modal"*/}
-        {/*        aria-label="Close">*/}
-        {/*  <span aria-hidden="true" >&times;</span>*/}
-        {/*</button>*/}
-        <div className="modal-header">
-          <h5 className="modal-title" id="exampleModalLabel">Create order</h5>
-          <button className="close " data-dismiss="modal"
-                  aria-label="Close">
-            <span aria-hidden="true" onClick={() => setActive(false)}>&times;</span>
-          </button>
-        </div>
-        {/*<CardHeader className="border-bottom">*/}
-        {/*  <h6 className="m-0">Groups</h6>*/}
-        {/*</CardHeader>*/}
-        <ListGroup flush>
-          <ListGroupItem className="px-3">
-            <Form>
-              <strong className="text-muted d-block mb-2">
-                Input Groups
-              </strong>
-              <InputGroups/>
+      <Card small className="mb-11 p-2">
+        <CardHeader className="border-bottom">
+          <h6 className="m-0">Add payment</h6>
+        </CardHeader>
+        <CardBody className="p-0">
+          <ListGroup flush>
+            <form onSubmit={handleSubmit(submit)}>
+              <ListGroupItem className="p-3">
+                <div className="input-group">
+                  <select id="disabledSelect" className="form-control" {...register('companyName', {required: true})}>
+                    <option value="">Choice company</option>
+                    {table.map(row => <option key={row._id} value={row.companyName}>{row.companyName}</option>)}
+                  </select>
+                  {errors.companyName && <span>{errors.companyName.message}</span>}
+                </div>
 
-              <strong className="text-muted d-block mb-2">
-                Seamless Input Groups
-              </strong>
-              <SeamlessInputGroups/>
-            </Form>
-          </ListGroupItem>
-        </ListGroup>
+                <div className="input-group pt-2">
+                  <input type="text" className="form-control"
+                         id="validationDefaultUsername"
+                         aria-describedby="inputGroupPrepend2"
+                         placeholder={'Name of game'} {...register('gameName')}/>
+                  {errors.gameName && <span>{errors.gameName.message}</span>}
+                </div>
+
+                <div className="form-row pt-2">
+                  <div className="col-md-8 mb-3">
+                    <input type="number" className="form-control" placeholder={'Price'} {...register('totalPrice')}/>
+                    {errors.totalPrice && <span>{errors.totalPrice.message}</span>}
+                  </div>
+
+                  <div className="col-md-4 mb-3">
+                    <select id="disabledSelect" className="form-control" placeholder={'Currency'} {...register('currency')}>
+                      <option defaultValue='uan'>uan</option>
+                      <option value='$'>$</option>
+                    </select>
+                    {errors.currency && <span>{errors.currency.message}</span>}
+                  </div>
+
+                </div>
+                <div className="form-group">
+                  <div className="form-check pl-5">
+                    <input className="form-check-input" type="checkbox" value="" id="invalidCheck" placeholder={'Confirm'} {...register('confirm')}/>
+                    {errors.confirm && <span>{errors.confirm.message}</span>}
+                    <label className="form-check-label" htmlFor="invalidCheck">
+                      Agree to terms and conditions
+                    </label>
+                    <div className="invalid-feedback">
+                      You must agree before submitting.
+                    </div>
+                  </div>
+                </div>
+              </ListGroupItem>
+              <ListGroupItem className="d-flex px-3 border-0">
+                <Button disabled={!isValid} size="ml">Submit</Button>
+                <Button onClick={() => setActive(false)} theme="warning" size="sm" className="ml-auto">Cansel</Button>
+              </ListGroupItem>
+            </form>
+          </ListGroup>
+        </CardBody>
       </Card>
     </div>
   );
 };
+
 
 export {TableRowAdder};

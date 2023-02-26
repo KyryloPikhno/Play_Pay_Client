@@ -41,7 +41,7 @@ MainFooter.defaultProps = {
     },
     {
       title: "Account",
-      to: "/account"
+      to: "/table"
     }
   ]
 };

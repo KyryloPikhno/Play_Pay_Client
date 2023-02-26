@@ -1,3 +1,6 @@
+import {useDispatch, useSelector} from "react-redux";
+import {useEffect, useState} from "react";
+import {useSearchParams} from "react-router-dom";
 import {
   Button,
   Card,
@@ -8,18 +11,49 @@ import {
   Row
 } from "shards-react";
 
-import PageTitle from "../Common/PageTitle";
 import {TableRowAdder} from "../TableRowAdder/TableRowAdder";
-import React, {useState} from "react";
+import {tableActions} from "../../redux/slices/table.slice";
+import {TableBody} from "../TableBody/TableBody";
+import PageTitle from "../Common/PageTitle";
 
 const Account = () => {
   const [active, setActive] = useState(false);
+
+  const [query] = useSearchParams({});
+
+  const {table} = useSelector(state => state.tableReducer);
+
+  const dispatch = useDispatch();
+
+  const statusChanger = (id) => {
+    try {
+      dispatch(tableActions.update({id, status: true}));
+    } catch (e) {
+      console.log('error');
+    }
+  };
+
+  const deleter= (id) => {
+    try {
+      dispatch(tableActions.deleteById({id}));
+    } catch (e) {
+      console.log('error');
+    }
+  };
+
+  useEffect(() => {
+    try {
+      dispatch(tableActions.getTable({company: query.get('company')}));
+    } catch (e) {
+      console.log('error');
+    }
+  }, [dispatch, query]);
 
 
   return (
     <Container fluid className="main-content-container">
       <Row noGutters className="page-header py-4">
-        <PageTitle sm="4" title="Company Tables" subtitle="User account"
+        <PageTitle sm="4" title="Company table"
                    className="text-sm-left"/>
       </Row>
       <Row>
@@ -32,83 +66,30 @@ const Account = () => {
               <table className="table mb-0">
                 <thead className="bg-light">
                 <tr>
-                  <th scope="col" className="border-0">
-                    idfff
-                  </th>
-                  <th scope="col" className="border-0">
-                    Company
-                  </th>
-                  <th scope="col" className="border-0">
-                    Game Name
-                  </th>
-                  <th scope="col" className="border-0">
-                    Payment
-                  </th>
-                  <th scope="col" className="border-0">
-                    Currency
-                  </th>
-                  <th scope="col" className="border-0">
-                    Date
-                  </th>
-                  <th scope="col" className="border-0">
-                    Date of payment
-                  </th>
+                  <th scope="col" className="border-0 ">№</th>
+                  <th scope="col" className="border-0">Company</th>
+                  <th scope="col" className="border-0">Name of game</th>
+                  <th scope="col" className="border-0">Price</th>
+                  <th scope="col" className="border-0">Currency</th>
+                  <th scope="col" className="border-0">Date</th>
+                  <th scope="col" className="border-0">Date of payment</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                  <td>1</td>
-                  <td>Ali</td>
-                  <td>Kerry</td>
-                  <td>Russian Federation</td>
-                  <td>Gdańsk</td>
-                  <td>107-0339</td>
-                  <td>107-0339</td>
-                </tr>
-                <tr>
-                  <td>2</td>
-                  <td>Clark</td>
-                  <td>Angela</td>
-                  <td>Estonia</td>
-                  <td>Borghetto di Vara</td>
-                  <td>1-660-850-1647</td>
-                  <td>107-0339</td>
-                </tr>
-                <tr>
-                  <td>3</td>
-                  <td>Jerry</td>
-                  <td>Nathan</td>
-                  <td>Cyprus</td>
-                  <td>Braunau am Inn</td>
-                  <td>214-4225</td>
-                  <td>107-0339</td>
-                </tr>
-                <tr>
-                  <td>4</td>
-                  <td>Colt</td>
-                  <td>Angela</td>
-                  <td>Liberia</td>
-                  <td>Bad Hersfeld</td>
-                  <td>
-                    <button>Time</button>
-                  </td>
-                  <td>107-0339</td>
-                </tr>
+                {
+                  !!table.length &&
+                  table.map(row => <TableBody key={row._id} row={row} statusChanger={statusChanger}deleter={deleter}></TableBody>)
+                }
                 </tbody>
               </table>
             </CardBody>
           </Card>
         </Col>
+      {active && <TableRowAdder setActive={setActive}/>}
       </Row>
-      {
-        active &&
-        <TableRowAdder setActive={setActive}/>
-      }
-      {
-        !active && <div className="d-table m-auto">
-          <Button theme="primary" onClick={() => setActive(true)}>Add Score</Button>
-        </div>
-      }
+      {!active && <div className="d-table m-auto pb-3">
+        <Button theme="success" onClick={() => setActive(true)}>Add table row</Button>
+      </div>}
     </Container>
   )
 };

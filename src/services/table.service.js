@@ -9,7 +9,7 @@ const tableService = {
   }),
   create: (tableRow) => axiosService.post(urls.table, tableRow),
   getById: (id) => axiosService.get(`${urls.table}/${id}`),
-  update: (status) => axiosService.put(urls.table, status),
+  update: (id, status) => axiosService.put(`${urls.table}/${id}`, {status}),
   delete: (id) => axiosService.delete(`${urls.table}/${id}`)
 };
 

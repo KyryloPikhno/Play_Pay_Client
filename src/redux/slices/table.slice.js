@@ -5,16 +5,16 @@ import {tableService} from "../../services";
 
 const initialState = {
   table: [],
-  TableRow:null,
+  tableRow:null,
   loading: false,
   error: null,
 };
 
 const getTable = createAsyncThunk(
   'tableSlice/getTable',
-  async (_, {rejectWithValue}) => {
+  async ({company}, {rejectWithValue}) => {
     try {
-      const {data} = await tableService.getTable()
+      const {data} = await tableService.getTable(company)
       return data
     } catch (e) {
       return rejectWithValue(e.response.data)
@@ -34,11 +34,23 @@ const create = createAsyncThunk(
   }
 );
 
+const getById = createAsyncThunk(
+  'tableSlice/getById',
+  async ({id}, {rejectWithValue}) => {
+    try {
+      const {data} = await tableService.getById(id)
+      return data
+    } catch (e) {
+      return rejectWithValue(e.response.data)
+    }
+  }
+);
+
 const update = createAsyncThunk(
   'tableSlice/update',
-  async ({status}, {rejectWithValue}) => {
+  async ({id,status}, {rejectWithValue}) => {
     try {
-      const {data} = await tableService.update(status)
+      const {data} = await tableService.update(id,status)
       return data
     } catch (e) {
       return rejectWithValue(e.response.data)
@@ -50,8 +62,8 @@ const deleteById = createAsyncThunk(
   'tableSlice/deleteById',
   async ({id}, {rejectWithValue}) => {
     try {
-      const {data} = await tableService.delete(id)
-      return data
+      await tableService.delete(id)
+      return id
     } catch (e) {
       return rejectWithValue(e.response.data)
     }
@@ -78,8 +90,22 @@ const tableSlice = createSlice({
         state.loading = true
         state.error = null
       })
+      .addCase(getById.fulfilled, (state, action) => {
+        state.tableRow = action.payload
+        state.error = null
+        state.loading = false
+      })
+      .addCase(getById.rejected, (state, action) => {
+        state.error = action.payload
+        state.loading = false
+      })
+      .addCase(getById.pending, (state) => {
+        state.loading = true
+        state.error = null
+      })
       .addCase(create.fulfilled, (state, action) => {
-        state.TableRow = action.payload
+        state.table.push(action.payload)
+        state.tableRow = action.payload
         state.error = null
         state.loading = false
       })
@@ -92,7 +118,8 @@ const tableSlice = createSlice({
         state.error = null
       })
       .addCase(update.fulfilled, (state, action) => {
-        state.TableRow = action.payload
+        const find = state.table.find(row => row._id === action.payload._id)
+        Object.assign(find, action.payload)
         state.error = null
         state.loading = false
       })
@@ -105,6 +132,8 @@ const tableSlice = createSlice({
         state.error = null
       })
       .addCase(deleteById.fulfilled, (state, action) => {
+        const index = state.table.findIndex(row => row._id === action.payload)
+        state.table.splice(index,1)
         state.error = null
         state.loading = false
       })
@@ -122,6 +151,7 @@ const {reducer: tableReducer} = tableSlice;
 
 const tableActions = {
   getTable,
+  getById,
   create,
   update,
   deleteById
