@@ -6,12 +6,12 @@ import {
   ListGroupItem,
 } from "shards-react";
 import React from "react";
-import InputGroups from "../components-overview/InputGroups";
-import SeamlessInputGroups from "../components-overview/SeamlessInputGroups";
+import InputGroups from "../ComponentsOverview/InputGroups";
+import SeamlessInputGroups from "../ComponentsOverview/SeamlessInputGroups";
 
-import css from './ScoreAdder.module.css';
+import css from './TableRowAdder.module.css';
 
-const ScoreAdder = ({setActive}) => {
+const TableRowAdder = ({setActive}) => {
 
   const {handleSubmit, register, reset} = useForm()
 
@@ -67,4 +67,4 @@ const ScoreAdder = ({setActive}) => {
   );
 };
 
-export {ScoreAdder};
+export {TableRowAdder};

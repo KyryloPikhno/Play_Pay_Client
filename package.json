@@ -20,7 +20,9 @@
     "shards-react": "^1.0.3",
     "shortid": "^2.2.16",
     "react-redux": "^8.0.5",
-    "react-hook-form": "^7.43.2"
+    "react-hook-form": "^7.43.2",
+    "@reduxjs/toolkit": "^1.9.1",
+    "@hookform/resolvers": "^2.9.11"
   },
   "scripts": {
     "start": "react-scripts start",

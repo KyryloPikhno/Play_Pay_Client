@@ -8,12 +8,12 @@ import {
   Row
 } from "shards-react";
 
-import PageTitle from "../common/PageTitle";
-import {ScoreAdder} from "../ScoreAdder/ScoreAdder";
+import PageTitle from "../Common/PageTitle";
+import {TableRowAdder} from "../TableRowAdder/TableRowAdder";
 import React, {useState} from "react";
 
 const Account = () => {
-  const [active,      setActive] = useState(false);
+  const [active, setActive] = useState(false);
 
 
   return (
@@ -102,12 +102,12 @@ const Account = () => {
       </Row>
       {
         active &&
-        <ScoreAdder setActive={setActive}/>
+        <TableRowAdder setActive={setActive}/>
       }
       {
         !active && <div className="d-table m-auto">
-        <Button theme="primary" onClick={() => setActive(true)}>Add Score</Button>
-      </div>
+          <Button theme="primary" onClick={() => setActive(true)}>Add Score</Button>
+        </div>
       }
     </Container>
   )

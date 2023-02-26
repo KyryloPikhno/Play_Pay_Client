@@ -2,13 +2,13 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Container, Row, Col } from "shards-react";
 
-import PageTitle from "./../components/common/PageTitle";
-import SmallStats from "./../components/common/SmallStats";
-import UsersOverview from "./../components/blog/UsersOverview";
-import UsersByDevice from "./../components/blog/UsersByDevice";
-import NewDraft from "./../components/blog/NewDraft";
-import Discussions from "./../components/blog/Discussions";
-import TopReferrals from "./../components/common/TopReferrals";
+import PageTitle from "../components/Common/PageTitle";
+import SmallStats from "../components/Common/SmallStats";
+import UsersOverview from "../components/Blog/UsersOverview";
+import UsersByDevice from "../components/Blog/UsersByDevice";
+import NewDraft from "../components/Blog/NewDraft";
+import Discussions from "../components/Blog/Discussions";
+import TopReferrals from "../components/Common/TopReferrals";
 
 const BlogOverview = ({ smallStats }) => (
   <Container fluid className="main-content-container px-4">
