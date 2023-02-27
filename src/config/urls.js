@@ -1,4 +1,6 @@
-const baseURL = 'http://localhost:4000';
+import {configs} from "./configs";
+
+const baseURL = configs.BASE_URL;
 
 const urls = {
   table: '/table'
