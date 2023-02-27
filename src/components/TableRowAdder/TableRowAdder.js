@@ -81,8 +81,8 @@ const TableRowAdder = ({setActive}) => {
 
                   <div className="col-md-4 mb-3">
                     <select id="disabledSelect" className="form-control" placeholder={'Currency'} {...register('currency')}>
-                      <option defaultValue='uan'>uan</option>
-                      <option value='$'>$</option>
+                      <option defaultValue='USD'>USD</option>
+                      <option value='EU'>EU</option>
                     </select>
                     {errors.currency && <span>{errors.currency.message}</span>}
                   </div>
