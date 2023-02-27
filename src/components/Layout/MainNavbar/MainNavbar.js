@@ -1,12 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
 import classNames from "classnames";
-import NavbarToggle from "./NavbarToggle";
 import {
   Container,
   Navbar
 } from "shards-react";
+
 import {TableFilter} from "../../TableFilter/TableFilter";
+import NavbarToggle from "./NavbarToggle";
 
 
 const MainNavbar = ({ stickyTop }) => {

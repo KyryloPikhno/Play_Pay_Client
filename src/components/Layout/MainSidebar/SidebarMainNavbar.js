@@ -1,8 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Navbar, NavbarBrand } from "shards-react";
-import img from '../../../images/Black-Play-Button-PNG-Picture.png'
 
+import img from '../../../images/Black-Play-Button-PNG-Picture.png'
 import { Dispatcher, Constants } from "../../../flux";
 
 class SidebarMainNavbar extends React.Component {
@@ -46,6 +46,7 @@ class SidebarMainNavbar extends React.Component {
               )}
             </div>
           </NavbarBrand>
+          {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
           <a
             className="toggle-sidebar d-sm-inline d-md-none d-lg-none"
             onClick={this.handleToggleSidebar}

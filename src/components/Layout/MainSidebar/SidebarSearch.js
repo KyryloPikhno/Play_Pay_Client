@@ -7,6 +7,7 @@ import {
   InputGroupText
 } from "shards-react";
 
+// eslint-disable-next-line import/no-anonymous-default-export
 export default () => (
   <Form className="main-sidebar__search w-100 border-right d-sm-flex d-md-none d-lg-none" style={{ display: "flex", minHeight: "45px" }}>
     <InputGroup seamless className="ml-3">

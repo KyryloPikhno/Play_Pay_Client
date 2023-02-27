@@ -1,4 +1,4 @@
-import {Route,Routes} from "react-router-dom";
+import {Route, Routes, Navigate} from "react-router-dom";
 import {MainLayout} from "./layouts";
 
 import {AccountPage, HomePage} from "./pages";
@@ -9,6 +9,7 @@ function App() {
   return (
     <Routes>
       <Route path={'/'} element={<MainLayout/>}>
+        <Route index element={<Navigate to={'/table'}/>}/>
         <Route path={'/home'} element={<HomePage/>}/>
         <Route path={'/table'} element={<AccountPage/>}/>
       </Route>
