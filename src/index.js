@@ -1,6 +1,6 @@
 import {BrowserRouter} from "react-router-dom";
 import {Provider} from "react-redux";
-import ReactDOM from 'react-dom/client';
+import ReactDOM from 'react-dom';
 import React from 'react';
 
 import {setupStore} from "./redux";
