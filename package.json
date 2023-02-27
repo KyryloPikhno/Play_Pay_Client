@@ -1,8 +1,11 @@
 {
-  "name": "shards-dashboard-lite-react",
+  "name": "play-pay-client-project",
   "version": "1.0.0",
   "private": true,
   "homepage": "./",
+  "engines": {
+    "yarn": "1.x"
+  },
   "dependencies": {
     "camelize": "^1.0.1",
     "chart.js": "^4.2.1",
@@ -26,7 +29,8 @@
     "date-fns": "^2.29.3",
     "joi": "^17.8.3",
     "moment": "^2.29.4",
-    "prop-types" : "^15.8.1"
+    "prop-types" : "^15.8.1",
+    "npm": "^9.5.1"
   },
   "scripts": {
     "start": "react-scripts start",
