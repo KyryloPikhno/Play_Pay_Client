@@ -12,7 +12,7 @@ function App() {
   useEffect(() => {
     const favicon = document.getElementById('favicon');
     favicon.setAttribute('href', icon);
-  }, []);
+  }, [ ]);
 
   return (
     <Routes>
