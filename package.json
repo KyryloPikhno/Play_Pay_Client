@@ -2,7 +2,7 @@
   "name": "project",
   "version": "2",
   "private": true,
-  "homepage": "http://example.com/relativepath",
+  "homepage": "./",
   "dependencies": {
     "@hookform/resolvers": "^2.9.11",
     "@reduxjs/toolkit": "^1.9.1",
