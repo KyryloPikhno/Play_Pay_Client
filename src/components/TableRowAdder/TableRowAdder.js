@@ -1,4 +1,4 @@
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import {joiResolver} from "@hookform/resolvers/joi";
 import {useForm} from "react-hook-form";
 import {
@@ -30,8 +30,6 @@ const TableRowAdder = ({setActive}) => {
     mode: 'all'
   });
 
-  const {table} = useSelector(state => state.tableReducer);
-
   const dispatch = useDispatch();
 
   const submit = async (tableRow) => {
@@ -58,9 +56,13 @@ const TableRowAdder = ({setActive}) => {
             <form onSubmit={handleSubmit(submit)}>
               <ListGroupItem className="p-3">
                 <div className="input-group">
-                  <select id="disabledSelect" className="form-control" {...register('companyName', {required: true})}>
+                  <select id="disabledSelect" className="form-control" {...register('companyName')}>
                     <option value="">Choice company</option>
-                    {table.map(row => <option key={row._id} value={row.companyName}>{row.companyName}</option>)}
+                    <option value='Company 1'>Company 1</option>
+                    <option value='Company 2'>Company 2</option>
+                    <option value='Company 3'>Company 3</option>
+                    <option value='Company 4'>Company 4</option>
+                    <option value='Company 5'>Company 5</option>
                   </select>
                   {errors.companyName && <span>{errors.companyName.message}</span>}
                 </div>

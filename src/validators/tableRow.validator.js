@@ -3,7 +3,6 @@ import Joi from "joi";
 import {regexp} from "../config";
 
 
-
 const newTableRowValidator = Joi.object({
   companyName: Joi.string().required(),
   gameName: Joi.string().regex(regexp.GAME_NAME).required().messages({
